@@ -13,9 +13,9 @@ public class Scene {
     LinkedList<Particle> particles = new LinkedList<>();
     LinkedList<Wall> walls = new LinkedList<>();
     
-    Particle addParticle(double mass, double x, double y, double restitution, double friction) {
+    Particle addParticle(double mass, double x, double y, double vx, double vy, double restitution, double friction) {
         
-        Particle p = new Particle(particleIdCounter++, mass, x, y, restitution, friction);
+        Particle p = new Particle(particleIdCounter++, mass, x, y, vx, vy, restitution, friction);
         particles.add(p);
         
         return p;

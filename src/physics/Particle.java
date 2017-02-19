@@ -12,11 +12,13 @@ public class Particle {
     public double restitution = .05;
     public double friction = .5;
 
-    public Particle(int id, double mass, double x, double y, double restitution, double friction) {
+    public Particle(int id, double mass, double x, double y, double vx, double vy, double restitution, double friction) {
         this.id = id;
         this.mass = mass;
         this.x = x;
         this.y = y;
+        this.vx = vx;
+        this.vy = vy;
         this.restitution = restitution;
         this.friction = friction;
     }

@@ -29,8 +29,8 @@ public class Physics extends JPanel {
         // Jelenet létrehozása.
         double res = .5;
         double fric = .1;
-        scene.addParticle(2, 10, 300, res, fric);
-        scene.addParticle(1, 80, 300, res, fric);
+        scene.addParticle(1, 10, 300, 0, 0, res, fric);
+        scene.addParticle(1, 80, 300, 0, 0, res, fric);
         scene.addWall(0, 0, 0, 1);
         scene.addWall(0, 0, Math.cos(2.8), Math.sin(2.8));
         scene.addWall(0, 50, Math.cos(2), Math.sin(2));

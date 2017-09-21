@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,10 +15,12 @@ import javax.swing.JPanel;
 public class Physics extends JPanel {
 
     private static final double dt = .05d;
+    public static final double solver_iterations = 200;
     private static final Scene scene = new Scene();
 
     public static void main(String[] args) {
-
+        
+        
         JFrame frame = new JFrame("HoE Physics");
         frame.setSize(1200, 800);
         frame.setLocationRelativeTo(null);
@@ -27,10 +30,18 @@ public class Physics extends JPanel {
         frame.setVisible(true);
         
         // Jelenet létrehozása.
-        double res = .5;
-        double fric = .1;
+        double res = .01;
+        double fric = .4;
         scene.addParticle(1, 10, 300, 0, 0, res, fric);
         scene.addParticle(1, 80, 300, 0, 0, res, fric);
+        scene.addParticle(1, 50, 370, 0, 0, res, fric);
+        ShapeMatchingConstraint c = new ShapeMatchingConstraint(1, 
+                new ParticleSMC[]{
+                    scene.getParticle(0),
+                    scene.getParticle(1),
+                    scene.getParticle(2),
+                }, .01);
+        scene.addConstraints(c);
         scene.addWall(0, 0, 0, 1);
         scene.addWall(0, 0, Math.cos(2.8), Math.sin(2.8));
         scene.addWall(0, 50, Math.cos(2), Math.sin(2));

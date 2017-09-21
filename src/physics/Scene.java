@@ -8,14 +8,14 @@ public class Scene {
     double gravity[] = {.0, -9.8};
     double damping = 0;
     
-    int particleIdCounter = 0;
     int wallIdCounter = 0;
-    LinkedList<Particle> particles = new LinkedList<>();
+    LinkedList<ParticleSMC> particles = new LinkedList<>();
     LinkedList<Wall> walls = new LinkedList<>();
+    LinkedList<Constraints> constraints = new LinkedList<>();
     
     Particle addParticle(double mass, double x, double y, double vx, double vy, double restitution, double friction) {
         
-        Particle p = new Particle(particleIdCounter++, mass, x, y, vx, vy, restitution, friction);
+        ParticleSMC p = new ParticleSMC(particles.size(), mass, x, y, vx, vy, restitution, friction);
         particles.add(p);
         
         return p;
@@ -26,6 +26,12 @@ public class Scene {
         walls.add(w);
         
         return w;
+    }
+    
+    Constraints addConstraints(Constraints c) {
+        constraints.add(c);
+        
+        return c;
     }
     
     public void step(double dt) {
@@ -68,6 +74,13 @@ public class Scene {
             }
         }
         
+        // Kényszerítők.
+        for (int i = 0; i < Physics.solver_iterations; ++i) {
+            for (Constraints c : constraints) {
+                c.enforce();
+            }
+        }
+        
         // Sebesség és pozíció frissítése.
         for (Particle p : particles) {
             p.vx = (p.tempX - p.x) * 1 / dt;
@@ -87,5 +100,13 @@ public class Scene {
             double d[] = {1000 * w.ny, -1000 * w.nx};
             g2.drawLine((int)(w.x+d[0]), (int)(w.y+d[1]), (int)(w.x-d[0]), (int)(w.y-d[1]));
         }
+        
+        for (Constraints c : constraints) {
+            // TODO: szakaszok megjelenítése (síkidom oldalai)
+        }
+    }
+    
+    public ParticleSMC getParticle(int index) {
+        return particles.get(index);
     }
 }
